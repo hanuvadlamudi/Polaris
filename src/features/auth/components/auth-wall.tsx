@@ -1,7 +1,8 @@
 import { ShieldAlert } from "lucide-react"
 import { Item, ItemContent, ItemDescription, ItemMedia, ItemTitle, ItemActions } from "@/components/ui/item"
 import { SignInButton, SignUpButton } from "@clerk/nextjs"
-import { Button } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
 export const AuthWall = () => {
     return (
@@ -18,14 +19,14 @@ export const AuthWall = () => {
                 </ItemContent>
                 <ItemActions className="mt-6 flex flex-wrap justify-center gap-4">
                     <SignInButton mode="modal">
-                        <Button variant="default" className="min-w-[120px] font-semibold tracking-tight shadow-md transition-all hover:scale-105 active:scale-95">
+                        <span className={cn(buttonVariants({ variant: "default" }), "min-w-[120px] font-semibold tracking-tight shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer")}>
                             Sign In
-                        </Button>
+                        </span>
                     </SignInButton>
                     <SignUpButton mode="modal">
-                        <Button variant="outline" className="min-w-[120px] font-semibold tracking-tight transition-all hover:bg-accent/80 hover:scale-105 active:scale-95">
+                        <span className={cn(buttonVariants({ variant: "outline" }), "min-w-[120px] font-semibold tracking-tight transition-all hover:bg-accent/80 hover:scale-105 active:scale-95 cursor-pointer")}>
                             Create Account
-                        </Button>
+                        </span>
                     </SignUpButton>
                 </ItemActions>
             </Item>
