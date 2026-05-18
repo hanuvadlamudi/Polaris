@@ -2,10 +2,6 @@ import { generateText } from 'ai';
 import { google } from '@ai-sdk/google';
 
 
-// const google = createGoogleGenerativeAI({
-//     apiKey: "AIzaSyCEvYGCIm154XIZt5TWvytsNSGdE7VlHlE",
-// })
-
 export async function POST() {
     const response = await generateText({
         model: google('gemini-2.5-flash'),
