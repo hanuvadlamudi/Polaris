@@ -8,11 +8,19 @@ export default function DemoPage() {
         await fetch("/api/demo/blocking", { method: "POST" });
     }
 
+    const handleBackground = async () => {
+        await fetch("/api/demo/background", { method: "POST" });
+    }
+
     return (
         <div className="p-8">
             <Button onClick={handleBlocking}>
                 Blocking
             </Button>
+            
+            <Button onClick={handleBackground}>
+                Background
+            </Button>
         </div>
     )
-}
+}
