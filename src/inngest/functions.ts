@@ -1,12 +1,17 @@
 
+import { google } from "@ai-sdk/google";
+import { generateText } from "ai";
 import { inngest } from "./client";
 
-export const processTask = inngest.createFunction(
-    { id: "hello-world", triggers: { event: "app/hello.world" } },
+export const demoGenerate = inngest.createFunction(
+    { id: "demo-generate", triggers: { event: "app/demo/generate" } },
     async ({ event, step }) => {
-        console.log("hello-world", event);
-        await step.sleep("pause", "1s");
-
-        return { message: `Hello ${event.data.email}` };
+        console.log("demo-generate", event);
+        await step.run("generate-text", async () => {
+            return await generateText({
+                model: google('gemini-2.5-flash'),
+                prompt: 'Write a vegetarian lasagna recipe for 4 people.',
+            });
+        });
     }
 );
