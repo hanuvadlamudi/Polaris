@@ -9,10 +9,10 @@ const URL_REGEX = /https?:\/\/[^\s]+/g;
 export const demoGenerate = inngest.createFunction(
 
     { id: "demo-generate", triggers: { event: "app/demo/generate" } },
-    
+
     async ({ event, step }) => {
 
-        const { prompt } = event.data as { prompt: string; }
+        const { prompt = "Write a vegetarian lasagna recipe for 4 people." } = event.data as { prompt?: string; };
 
         const urls = await step.run("crawl", async () => {
             return prompt.match(URL_REGEX) ?? [];
@@ -30,15 +30,17 @@ export const demoGenerate = inngest.createFunction(
                 })
             );
 
-            return results.filter(Boolean);
+            return results.filter(Boolean).join("\n\n");
         });
+
+        const finalPrompt = scrappedContent ? `Context: \n ${scrappedContent} \n\n Question: ${prompt}` : prompt;
 
         console.log("crawled data", urls)
 
         await step.run("generate-text", async () => {
             return await generateText({
                 model: google('gemini-2.5-flash'),
-                prompt: 'Write a vegetarian lasagna recipe for 4 people.',
+                prompt: finalPrompt,
             });
         });
     }
