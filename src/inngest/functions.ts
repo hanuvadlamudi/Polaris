@@ -3,6 +3,7 @@ import { google } from "@ai-sdk/google";
 import { generateText } from "ai";
 import { inngest } from "./client";
 import { firecrawl } from "@/lib/firecrawl";
+import * as Sentry from "@sentry/nextjs";
 
 const URL_REGEX = /https?:\/\/[^\s]+/g;
 
@@ -41,7 +42,23 @@ export const demoGenerate = inngest.createFunction(
             return await generateText({
                 model: google('gemini-2.5-flash'),
                 prompt: finalPrompt,
+                experimental_telemetry: {
+                    isEnabled: true,
+                    recordInputs: true,
+                    recordOutputs: true,
+                }
             });
+        });
+    }
+);
+
+export const demoError = inngest.createFunction(
+    { id: "demo-error", triggers: { event: "app/demo/error" } },
+    async ({ event, step }) => {
+        await step.run("simulate-failure", async () => {
+            const error = new Error("This is a simulated background job failure");
+            Sentry.captureException(error);
+            throw error;
         });
     }
 );
