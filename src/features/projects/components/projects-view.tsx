@@ -10,7 +10,7 @@ import { Kbd } from "@/components/ui/kbd";
 import { ProjectsList } from "./projects-list";
 import { useCreateProject } from "../hooks/use-projects";
 import {adjectives , animals, colors , uniqueNamesGenerator} from "unique-names-generator";
-// import { ProjectsCommandDialog } from "./projects-command-dialog";
+import { ProjectsCommandDialog } from "./projects-command-dialog";
 // import { ImportGithubDialog } from "./import-github-dialog";
 // import { NewProjectDialog } from "./new-project-dialog";
 
@@ -21,39 +21,40 @@ const font = Poppins({
 
 export const ProjectsView = () => {
   const createProject = useCreateProject();
-  // const [commandDialogOpen, setCommandDialogOpen] = useState(false);
-  // const [importDialogOpen, setImportDialogOpen] = useState(false);
-  // const [newProjectDialogOpen, setNewProjectDialogOpen] = useState(false);
+  const [commandDialogOpen, setCommandDialogOpen] = useState(false);
+  const [importDialogOpen, setImportDialogOpen] = useState(false);
+  const [newProjectDialogOpen, setNewProjectDialogOpen] = useState(false);
 
-  // useEffect(() => {
-  //   const handleKeyDown = (e: KeyboardEvent) => {
-  //     if (e.metaKey || e.ctrlKey) {
-  //       if (e.key === "k") {
-  //         e.preventDefault();
-  //         setCommandDialogOpen(true);
-  //       }
-  //       if (e.key === "i") {
-  //         e.preventDefault();
-  //         setImportDialogOpen(true);
-  //       }
-  //       if (e.key === "j") {
-  //         e.preventDefault();
-  //         setNewProjectDialogOpen(true);
-  //       }
-  //     }
-  //   }
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.metaKey || e.ctrlKey) {
+        if (e.key === "k") {
+          e.preventDefault();
+          setCommandDialogOpen(true);
+        }
+        if (e.key === "i") {
+          e.preventDefault();
+          setImportDialogOpen(true);
+        }
+        if (e.key === "j") {
+          e.preventDefault();
+          setNewProjectDialogOpen(true);
+        }
+      }
+    }
 
-  //   document.addEventListener("keydown", handleKeyDown);
-  //   return () => document.removeEventListener("keydown", handleKeyDown);
-  // }, []);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
 
   return (
     <>
-      {/* <ProjectsCommandDialog
+      <ProjectsCommandDialog
         open={commandDialogOpen}
         onOpenChange={setCommandDialogOpen}
       />
+      {/* 
       <ImportGithubDialog
         open={importDialogOpen}
         onOpenChange={setImportDialogOpen}
@@ -68,7 +69,7 @@ export const ProjectsView = () => {
           <div className="flex justify-between gap-4 w-full items-center">
 
             <div className="flex items-center gap-2 w-full group/logo">
-              <img src="/vercel.svg" alt="Polaris" className="size-[32px] md:size-[46px]" />
+              <img src="/logo.svg" alt="Polaris" className="size-[32px] md:size-[46px]" />
               <h1 className={cn(
                 "text-4xl md:text-5xl font-semibold",
                 font.className,
@@ -125,7 +126,7 @@ export const ProjectsView = () => {
               </Button>
             </div>
 
-            <ProjectsList onViewAll={() => {}} />
+            <ProjectsList onViewAll={() => setCommandDialogOpen(true)} />
 
           </div>
 
