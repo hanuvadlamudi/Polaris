@@ -22,30 +22,30 @@ const font = Poppins({
 export const ProjectsView = () => {
   const createProject = useCreateProject();
   const [commandDialogOpen, setCommandDialogOpen] = useState(false);
-  // const [importDialogOpen, setImportDialogOpen] = useState(false);
-  // const [newProjectDialogOpen, setNewProjectDialogOpen] = useState(false);
+  const [importDialogOpen, setImportDialogOpen] = useState(false);
+  const [newProjectDialogOpen, setNewProjectDialogOpen] = useState(false);
 
-  // useEffect(() => {
-  //   const handleKeyDown = (e: KeyboardEvent) => {
-  //     if (e.metaKey || e.ctrlKey) {
-  //       if (e.key === "k") {
-  //         e.preventDefault();
-  //         setCommandDialogOpen(true);
-  //       }
-  //       if (e.key === "i") {
-  //         e.preventDefault();
-  //         setImportDialogOpen(true);
-  //       }
-  //       if (e.key === "j") {
-  //         e.preventDefault();
-  //         setNewProjectDialogOpen(true);
-  //       }
-  //     }
-  //   }
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.metaKey || e.ctrlKey) {
+        if (e.key === "k") {
+          e.preventDefault();
+          setCommandDialogOpen(true);
+        }
+        if (e.key === "i") {
+          e.preventDefault();
+          setImportDialogOpen(true);
+        }
+        if (e.key === "j") {
+          e.preventDefault();
+          setNewProjectDialogOpen(true);
+        }
+      }
+    }
 
-  //   document.addEventListener("keydown", handleKeyDown);
-  //   return () => document.removeEventListener("keydown", handleKeyDown);
-  // }, []);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
 
   return (
@@ -69,7 +69,7 @@ export const ProjectsView = () => {
           <div className="flex justify-between gap-4 w-full items-center">
 
             <div className="flex items-center gap-2 w-full group/logo">
-              <img src="/vercel.svg" alt="Polaris" className="size-[32px] md:size-[46px]" />
+              <img src="/logo.svg" alt="Polaris" className="size-[32px] md:size-[46px]" />
               <h1 className={cn(
                 "text-4xl md:text-5xl font-semibold",
                 font.className,

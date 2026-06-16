@@ -27,7 +27,10 @@ export const getPartial = query({
     handler: async (ctx,args) => {
         const identity = await verifyAuth(ctx);
 
-        return await ctx.db.query("projects").take(args.limit);
+        return await ctx.db.query("projects")
+        .withIndex("by_updatedAt")
+        .order("desc")
+        .take(args.limit);
 
     }
 })
@@ -38,7 +41,11 @@ export const get = query({
     handler: async (ctx) => {
         const identity = await verifyAuth(ctx);
 
-        return await ctx.db.query("projects").collect();
+        return await ctx.db
+        .query("projects")
+        .withIndex("by_updatedAt")
+        .order("desc")
+        .collect();
 
     }
 })
